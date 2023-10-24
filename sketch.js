@@ -55,6 +55,16 @@ function draw() {
   drawInnerCir();
   drawHexagons();
   drawCurves();
+
+  //draw the first straight line
+  stroke(255, 28, 0);
+  strokeWeight(2);
+  line(188, 85, 285, 0);
+
+  //draw the second straight line
+  stroke(255, 28, 0);
+  strokeWeight(2);
+  line(193, 488, 315, 405);
 }
 
 //draw big circles
