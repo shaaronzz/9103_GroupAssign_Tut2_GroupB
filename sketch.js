@@ -53,6 +53,8 @@ function draw() {
   drawDotMid();
   drawRingMid();
   drawInnerCir();
+  drawLineOut();
+  drawLineMid();
   drawHexagons();
   drawCurves();
 
@@ -92,9 +94,58 @@ function drawCircle() {
   }
 }
 
+let curve_40 = [];
+let curve_25 = [];
+
 //draw lines at outer circle of the big circle
 function drawLineOut() {
+  for (let i = 0; i < positions.length; i++) {
+    if (i == 1 || i == 8 || i == 14) {
+      let numCircles = 5;
+      let curve_70 = [];
+      let curve_35 = [];
+      for (let j = 0; j < numCircles; j++) {
+        let numDot = (j + 3.5) * 10;
+        // angleMode(DEGREES);
+        let angle = 360 / numDot;
+        noFill();
+        stroke('#ef1e1e');
 
+
+        for (let k = 0; k < numDot; k++) {
+          let x = positions[i].xPos + cos(angle * k) * (j * 7 + 45);
+          let y = positions[i].yPos + sin(angle * k) * (j * 7 + 45);
+          if (numDot > 70) {
+            curve_70.push({ "x": x, "y": y })
+          } else if (numDot == 35) {
+            curve_35.push({ "x": x, "y": y })
+          }
+        }
+
+        if (curve_70.length > 0 && curve_35.length > 0) {
+          for (var qw = 0; qw < curve_70.length; qw++) {
+            var num = qw / 2;
+            num = Math.round(num);
+            if (num >= (curve_35.length - 1)) {
+              num = curve_35.length - 1;
+            }
+            line(curve_70[qw].x, curve_70[qw].y, curve_35[num].x, curve_35[num].y);
+          }
+        }
+      }
+    }
+
+    if (curve_40.length > 0 && curve_25.length > 0) {
+      for (var qw = 0; qw < curve_40.length; qw++) {
+        var num = qw / 2;
+        num = Math.round(num);
+        if (num >= (curve_25.length - 1)) {
+          num = curve_25.length - 1;
+        }
+        line(curve_40[qw].x, curve_40[qw].y, curve_25[num].x, curve_25[num].y);
+      }
+    }
+  }
 }
 
 //draw dots (outer circle) inside of the big circle
@@ -156,6 +207,31 @@ function drawRingMid() {
 }
 
 //draw lines at mid circle of the big cirlce
+function drawLineMid() {
+  for (let i = 0; i < positions.length; i++) {
+    if (i == 9 && curve_40.length == 0) {
+      let numCircles = 3;
+
+      for (let j = 0; j < numCircles; j++) {
+        let numDot = (j + 2.5) * 10;
+        let DotRadius = 5;
+        angleMode(DEGREES);
+        let angle = 360 / numDot;
+        for (let k = 0; k < numDot; k++) {
+          let x = positions[i].xPos + cos(angle * k) * (j * 7 + 25);
+          let y = positions[i].yPos + sin(angle * k) * (j * 7 + 25);
+          fill(ShapeColor[i].Mid);
+          if (numDot == 25) {
+            curve_25.push({ "x": x, "y": y });
+          }
+          if (numDot >= 40) {
+            curve_40.push({ "x": x, "y": y });
+          }
+        }
+      }
+    }
+  }
+}
 
 //draw rings at inner circle of the big circle
 function drawInnerCir() {
