@@ -54,6 +54,7 @@ function draw() {
   drawRingMid();
   drawInnerCir();
   drawHexagons();
+  drawCurves();
 }
 
 //draw big circles
@@ -157,7 +158,6 @@ function drawInnerCir() {
       ellipse(positions[i].xPos, positions[i].yPos, radius * 2, radius * 2);
       noStroke(); // Reset the stroke settings to their default values
     }
-
   }
 }
 
@@ -190,4 +190,98 @@ function drawHexagons() {
       }
     }
   }
+}
+
+function drawSmoothCurve(points) {
+  beginShape();
+  // First point
+  vertex(points[0].x, points[0].y);
+
+  // Use bezierVertex to connect other points
+  for (let i = 1; i < points.length - 2; i++) {
+    let xc = (points[i].x + points[i + 1].x) / 2;
+    let yc = (points[i].y + points[i + 1].y) / 2;
+    bezierVertex(points[i].x, points[i].y, xc, yc, xc, yc);
+  }
+
+  // End point
+  vertex(points[points.length - 1].x, points[points.length - 1].y);
+
+  endShape();
+}
+
+function drawCurves() {
+  noFill();
+  stroke('#E93468');
+  strokeWeight(5);
+
+  let curve1 = [
+    { x: 75, y: 75 },
+    { x: 67, y: 92 },
+    { x: 64, y: 120 },
+    { x: 75, y: 145 },
+    { x: 95, y: 160 },
+    { x: 110, y: 162 },
+  ];
+
+  let curve2 = [
+    { x: 188, y: 185 },
+    { x: 193, y: 172 },
+    { x: 208, y: 150 },
+    { x: 250, y: 125 },
+    { x: 260, y: 130 },
+  ];
+
+  let curve3 = [
+    { x: 415, y: -5 },
+    { x: 420, y: 20 },
+    { x: 440, y: 40 },
+    { x: 470, y: 45 },
+    { x: 495, y: 35 },
+  ];
+
+  let curve4 = [
+    { x: -35, y: 375 },
+    { x: -2.5, y: 360 },
+    { x: 20 , y: 340 },
+    { x: 47, y: 325 },
+    { x: 55, y: 327 },
+  ];
+
+  let curve5 = [
+    { x: 305, y: 295 },
+    { x: 325, y: 280 },
+    { x: 350, y: 275 },
+    { x: 375, y: 275 },
+    { x: 405, y: 300 },
+    { x: 410, y: 315 },
+  ];
+
+  let curve6 = [
+    { x: 475, y: 255 },
+    { x: 477, y: 240 },
+    { x: 485, y: 225 },
+    { x: 500, y: 212 },
+    { x: 510, y: 205 },
+    { x: 530, y: 200 },
+    { x: 550, y: 195 },
+  ];
+
+  let curve7 = [
+    { x: 85, y: 485 },
+    { x: 105, y: 510 },
+    { x: 130, y: 525 },
+    { x: 150, y: 530 },
+    { x: 170, y: 528 },
+    { x: 190, y: 523 },
+    { x: 195, y: 520 },
+  ];
+
+  drawSmoothCurve(curve1);
+  drawSmoothCurve(curve2);
+  drawSmoothCurve(curve3);
+  drawSmoothCurve(curve4);
+  drawSmoothCurve(curve5);
+  drawSmoothCurve(curve6);
+  drawSmoothCurve(curve7);
 }
