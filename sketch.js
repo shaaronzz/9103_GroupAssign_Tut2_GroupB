@@ -2,6 +2,8 @@
 //continue finish drawing the artwork: chain of small circles (make it better), the zip-lines
 //streamline codes
 //randomness(could be totally random or choose from a list): color, shape, position?
+let curve_40 = [];
+let curve_25 = [];
 
 function setup() {
   createCanvas(550, 550);
@@ -49,12 +51,9 @@ function setup() {
 function draw() {
   //draw big circles
   drawCircle();
-  drawDotOut();
-  drawDotMid();
-  drawRingMid();
-  drawInnerCir();
-  drawLineOut();
-  drawLineMid();
+  drawDotsIn();
+  drawRings();
+  drawZipLine();
   drawHexagons();
   drawCurves();
 
@@ -94,12 +93,10 @@ function drawCircle() {
   }
 }
 
-let curve_40 = [];
-let curve_25 = [];
-
-//draw lines at outer circle of the big circle
-function drawLineOut() {
+//draw zip lines in the big circle
+function drawZipLine() {
   for (let i = 0; i < positions.length; i++) {
+    //draw lines at outer circle of the big circle
     if (i == 1 || i == 8 || i == 14) {
       let numCircles = 5;
       let curve_70 = [];
@@ -110,7 +107,6 @@ function drawLineOut() {
         let angle = 360 / numDot;
         noFill();
         stroke('#ef1e1e');
-
 
         for (let k = 0; k < numDot; k++) {
           let x = positions[i].xPos + cos(angle * k) * (j * 7 + 45);
@@ -145,70 +141,8 @@ function drawLineOut() {
         line(curve_40[qw].x, curve_40[qw].y, curve_25[num].x, curve_25[num].y);
       }
     }
-  }
-}
 
-//draw dots (outer circle) inside of the big circle
-function drawDotOut() {
-  for (let i = 0; i < positions.length; i++) {
-    if (i !== 1 && i !== 8 && i !== 14) {
-      let numCircles = 5;
-      for (let j = 0; j < numCircles; j++) {
-        let numDot = (j + 3.5) * 10;
-        let DotRadius = 5;
-        angleMode(DEGREES);
-        let angle = 360 / numDot;
-        for (let k = 0; k < numDot; k++) {
-          let x = positions[i].xPos + cos(angle * k) * (j * 7 + 45);
-          let y = positions[i].yPos + sin(angle * k) * (j * 7 + 45);
-          fill(ShapeColor[i].Out);
-          ellipse(x, y, DotRadius, DotRadius);
-        }
-      }
-    }
-  }
-}
-
-//draw dots (mid circle) inside of the big circle
-function drawDotMid() {
-  for (let i = 0; i < positions.length; i++) {
-    if (i === 1 || i === 3 || i === 6 || i === 8 || i === 15) {
-      let numCircles = 3;
-      for (let j = 0; j < numCircles; j++) {
-        let numDot = (j + 2.5) * 10;
-        let DotRadius = 5;
-        angleMode(DEGREES);
-        let angle = 360 / numDot;
-        for (let k = 0; k < numDot; k++) {
-          let x = positions[i].xPos + cos(angle * k) * (j * 7 + 25);
-          let y = positions[i].yPos + sin(angle * k) * (j * 7 + 25);
-          fill(ShapeColor[i].Mid);
-          ellipse(x, y, DotRadius, DotRadius);
-        }
-      }
-    }
-  }
-}
-
-//draw rings at mid circle of the big circle
-function drawRingMid() {
-  for (let i = 0; i < positions.length; i++) {
-    if (i === 0 || i === 4 || i === 5 || i === 10 || i === 11 || i === 13) {
-      for (let j = 0; j < 3; j++) {
-        let radius = (j + 3) * 8;
-        noFill();
-        stroke(ShapeColor[i].Mid);
-        strokeWeight(3); // Set the stroke weight to make the outer circle thicker
-        ellipse(positions[i].xPos, positions[i].yPos, radius * 2, radius * 2);
-        noStroke(); // Reset the stroke settings to their default values
-      }
-    }
-  }
-}
-
-//draw lines at mid circle of the big cirlce
-function drawLineMid() {
-  for (let i = 0; i < positions.length; i++) {
+    //draw lines at mid circle of the big cirlce
     if (i == 9 && curve_40.length == 0) {
       let numCircles = 3;
 
@@ -233,9 +167,61 @@ function drawLineMid() {
   }
 }
 
-//draw rings at inner circle of the big circle
-function drawInnerCir() {
+//draw dots inside of the big circle
+function drawDotsIn() {
   for (let i = 0; i < positions.length; i++) {
+    //outer circle
+    if (i !== 1 && i !== 8 && i !== 14) {
+      let numCircles = 5;
+      for (let j = 0; j < numCircles; j++) {
+        let numDot = (j + 3.5) * 10;
+        let DotRadius = 5;
+        angleMode(DEGREES);
+        let angle = 360 / numDot;
+        for (let k = 0; k < numDot; k++) {
+          let x = positions[i].xPos + cos(angle * k) * (j * 7 + 45);
+          let y = positions[i].yPos + sin(angle * k) * (j * 7 + 45);
+          fill(ShapeColor[i].Out);
+          ellipse(x, y, DotRadius, DotRadius);
+        }
+      }
+    }
+
+    //mid circle
+    if (i === 1 || i === 3 || i === 6 || i === 8 || i === 15) {
+      let numCircles = 3;
+      for (let j = 0; j < numCircles; j++) {
+        let numDot = (j + 2.5) * 10;
+        let DotRadius = 5;
+        angleMode(DEGREES);
+        let angle = 360 / numDot;
+        for (let k = 0; k < numDot; k++) {
+          let x = positions[i].xPos + cos(angle * k) * (j * 7 + 25);
+          let y = positions[i].yPos + sin(angle * k) * (j * 7 + 25);
+          fill(ShapeColor[i].Mid);
+          ellipse(x, y, DotRadius, DotRadius);
+        }
+      }
+    }
+  }
+}
+
+//draw rings inside the big circle
+function drawRings() {
+  for (let i = 0; i < positions.length; i++) {
+    //draw rings at mid circle of the big circle
+    if (i === 0 || i === 4 || i === 5 || i === 10 || i === 11 || i === 13) {
+      for (let j = 0; j < 3; j++) {
+        let radius = (j + 3) * 8;
+        noFill();
+        stroke(ShapeColor[i].Mid);
+        strokeWeight(3); // Set the stroke weight to make the outer circle thicker
+        ellipse(positions[i].xPos, positions[i].yPos, radius * 2, radius * 2);
+        noStroke(); // Reset the stroke settings to their default values
+      }
+    }
+
+    //draw rings at inner circle of the big circle
     for (let j = 0; j < 2; j++) {
       let radius = (j + 2.5) * 6;
       noFill();
@@ -253,7 +239,6 @@ function drawHexagons() {
     let hexagonRadius = 90;
     let hexagonX = positions[i].xPos;
     let hexagonY = positions[i].yPos;
-
 
     for (let j = 0; j < 6; j++) {
       let angle = 360 / 6 * j;
@@ -293,7 +278,6 @@ function drawHexagons() {
     }
   }
 }
-
 
 function drawSmoothCurve(points) {
   beginShape();
