@@ -69,7 +69,7 @@ function drawCircle() {
     ellipse(positions[i].xPos, positions[i].yPos, 45, 45);
     fill(0);
     ellipse(positions[i].xPos, positions[i].yPos, 25, 25);
-    if (i === 0 || i ===1 || i === 4 || i === 9 || i === 10 || i === 11) {
+    if (i === 0 || i === 1 || i === 4 || i === 9 || i === 10 || i === 11) {
       fill(34, 151, 66);
       ellipse(positions[i].xPos, positions[i].yPos, 17, 17);
     }
@@ -167,30 +167,47 @@ function drawHexagons() {
     let hexagonRadius = 90;
     let hexagonX = positions[i].xPos;
     let hexagonY = positions[i].yPos;
-    
+
+
     for (let j = 0; j < 6; j++) {
       let angle = 360 / 6 * j;
       let x = hexagonX + hexagonRadius * cos(angle);
       let y = hexagonY + hexagonRadius * sin(angle);
+
       fill(0);
       stroke(221, 97, 40);
-      ellipse(x, y, 8, 8);
+      strokeWeight(2);
+      ellipse(x, y, 7.5, 7.5);
     }
-    
+
     for (let j = 0; j < 6; j++) {
       let angle1 = 360 / 6 * j;
       let angle2 = 360 / 6 * ((j + 1) % 6); // Next vertex
-      for (let k = 0; k < 5; k++) {
-        let fraction = k / 5;
+      for (let k = 0; k < 4; k++) {
+        let fraction = k / 4;
         let x = lerp(hexagonX + hexagonRadius * cos(angle1), hexagonX + hexagonRadius * cos(angle2), fraction);
         let y = lerp(hexagonY + hexagonRadius * sin(angle1), hexagonY + hexagonRadius * sin(angle2), fraction);
+
         fill(0);
         stroke(221, 97, 40);
-        ellipse(x, y, 8, 8);
+        strokeWeight(2);
+        ellipse(x, y, 7.5, 7.5);
       }
+    }
+
+    for (let j = 0; j < 6; j++) {
+      let angle = 360 / 6 * j;
+      let x = hexagonX + hexagonRadius * cos(angle);
+      let y = hexagonY + hexagonRadius * sin(angle);
+
+      //draw a white inner circle inside the small circle
+      fill(255);
+      stroke(0);
+      ellipse(x, y, 6.5, 6.5);
     }
   }
 }
+
 
 function drawSmoothCurve(points) {
   beginShape();
@@ -243,7 +260,7 @@ function drawCurves() {
   let curve4 = [
     { x: -35, y: 375 },
     { x: -2.5, y: 360 },
-    { x: 20 , y: 340 },
+    { x: 20, y: 340 },
     { x: 47, y: 325 },
     { x: 55, y: 327 },
   ];
